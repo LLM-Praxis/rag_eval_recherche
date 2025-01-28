@@ -1,3 +1,7 @@
+## Folien und Aufzeichnung
+* [Aufzeichnung Vortrag Pius 27.01.25](https://drive.google.com/file/d/1VmjOkADtsEB3cy75NPdDpEH1W5mXQTVn/view?usp=sharing)
+* [Folien Vortrag Pius 27.01.25](TODO)
+
 ### N-gram und Embedding basierte Generator Evaluation
 Es gibt verschiedene Ansätze, um die Antwort eines RAG-Systems mit einer Ground Truth zu vergleichen und deren Ähnlichkeit zu bewerten. Die einfachste und rechnerisch effizienteste Methode besteht darin, textbasierte Vergleichsmetriken wie [BLEU](https://dl.acm.org/doi/10.3115/1073083.1073135) oder [ROUGE](https://arxiv.org/abs/1803.01937) zu verwenden. Diese Ansätze bewerten die Ähnlichkeit der beiden Texte auf Grundlage ihrer n-Gramme und textuellen Übereinstimmungen.  
 Mehrere Studien und Erfahrungsberichte zeigen jedoch, dass diese Metriken insbesondere bei längeren Antworten oder solchen, die komplexes Reasoning erfordern, oft nicht mit menschlichen Präferenzen übereinstimmen. Aus diesem Grund wird von ihrer Verwendung bei RAG Evaluation in den meisten Fällen abgeraten.
