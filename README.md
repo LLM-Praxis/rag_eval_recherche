@@ -1,6 +1,8 @@
-## Folien und Aufzeichnung
+# RAG-Evaluation
+Diese README dient als zentrale Sammlung der wichtigsten wissenschaftlichen Arbeiten und Tools zur Evaluierung von RAG-Systemen. Sie ist das Ergebnis einer kontinuierlichen Recherche und wird daher auch in Zukunft regelmäßig erweitert und aktualisiert.  
+Sie finden die zugehörigen Folien und Aufzeichung unter den folgenden Links:
 * [Aufzeichnung Vortrag Pius 27.01.25](https://drive.google.com/file/d/1VmjOkADtsEB3cy75NPdDpEH1W5mXQTVn/view?usp=sharing)
-* [Folien Vortrag Pius 27.01.25](TODO)
+* [Folien Vortrag Pius 27.01.25](https://docs.google.com/presentation/d/1YTxIquMisYoCUuoY9pXklsiVHz5tYKxC/edit#slide=id.p1)
 
 ### N-gram und Embedding basierte Generator Evaluation
 Es gibt verschiedene Ansätze, um die Antwort eines RAG-Systems mit einer Ground Truth zu vergleichen und deren Ähnlichkeit zu bewerten. Die einfachste und rechnerisch effizienteste Methode besteht darin, textbasierte Vergleichsmetriken wie [BLEU](https://dl.acm.org/doi/10.3115/1073083.1073135) oder [ROUGE](https://arxiv.org/abs/1803.01937) zu verwenden. Diese Ansätze bewerten die Ähnlichkeit der beiden Texte auf Grundlage ihrer n-Gramme und textuellen Übereinstimmungen.  
@@ -10,8 +12,8 @@ Ein weiterer Ansatz ist die semantische Ähnlichkeitsbewertung, bei der die Bede
 Methoden wie [BERTScore](https://arxiv.org/abs/1904.09675) oder [MoverScore](https://arxiv.org/abs/1909.02622) verwenden hierbei vortrainierte Sprachmodelle, um den semantischen Gehalt der Texte zu analysieren und die Ähnlichkeit auf einer tieferen Ebene zu bewerten. Diese Ansätze berücksichtigen Synonyme, Paraphrasen und den kontextuellen Zusammenhang der Inhalte, was zu präziseren Bewertungen führt.
 Ein wesentlicher Vorteil dieser Methode ist, dass lokal gehostete Embedding-Modelle verwendet werden können, wodurch keine API-Kosten anfallen. Allerdings übertreffen Ansätze wie LLM-as-a-Judge in der Regel die Leistung dieser Methoden, was jedoch mit wesentlich höheren Kosten verbunden ist.
 
+### Evaluation Tools (Papers mit Github Repos)
 
-### LLM-basierte Evaluations Ansätze (mit Github Repos)
 #### [RAGAS: Automated Evaluation of Retrieval Augmented Generation](https://aclanthology.org/2024.eacl-demo.16/) (Mär 24)
 Das Paper **RAGAS** stellt ein Framework vor, das **Large Language Models (LLMs)** als Bewertungsinstanzen nutzt, um sowohl die Retrieval- als auch die Generationskomponenten von RAG-Systemen zu evaluieren. Eine Besonderheit von RAGAS ist, dass **keine Ground-Truth-Daten** benötigt werden, sondern lediglich eine Liste von Anfragen (Queries), was die Evaluierung erleichtert.  
 Allerdings wurde die Effektivität von RAGAS in späteren Arbeiten hinterfragt. Unter anderem haben sowohl **ARES** als auch **RAGChecker** haben in ihren eigenen Benchmarks gezeigt, dass sie bessere Ergebnisse erzielen können.
@@ -28,6 +30,9 @@ Es gibt eine Integration in LLAMAINDEX, wobei die Lösung unabhängig vom verwen
 
 #### [SelfCheckGPT: Zero-Resource Black-Box Hallucination Detection for Generative Large Language Models](https://arxiv.org/abs/2303.08896) (Mär 23)
 Das Paper präsentiert einen einfachen Ansatz, um die Tendenz von LLM-Systemen zu Halluzinationen zu bewerten, der auch auf RAG-Systeme anwendbar ist. Dabei wird dieselbe Query mehrfach an dasselbe RAG-System gestellt und die Ähnlichkeit der Antworten analysiert. Große Abweichungen zwischen den Antworten deuten auf eine hohe Wahrscheinlichkeit von Halluzinationen hin. Ein entscheidender Vorteil dieses Verfahrens besteht darin, dass keine Referenzantworten benötigt werden. Die Ähnlichkeit kann unter anderem sowohl mit NLI Modellen, als auch mit LLMs ermittelt werden. [Github Link](https://github.com/potsawee/selfcheckgpt)
+
+#### [eRAG: Evaluating Retrieval Quality in Retrieval-Augmented Generation](https://arxiv.org/abs/2404.13781) (Apr 24)
+eRAG präsentiert einen neuartigen Ansatz zur Bewertung von Information-Retrieval-Ergebnissen in RAG-Systemen. Dabei wird jedes Dokument aus der Retrieval-Liste einzeln vom großen Sprachmodell des RAG-Systems verarbeitet. Der für jedes Dokument generierte Output wird anschließend anhand der Ground-Truth-Labels der Downstream-Aufgabe bewertet. Dadurch wird die Downstream-Leistung eines Dokuments direkt als dessen Relevanzlabel genutzt. [Github Link](https://github.com/alirezasalemi7/eRAG)
 
 ### Evaluation Toolboxes
 Es gibt verschiedene Frameworks zur Erstellung von RAG-Systemen, wie zum Beispiel  [LangChain](https://www.langchain.com)+[LangSmith](https://www.langchain.com/langsmith), [LlamaIndex](https://www.llamaindex.ai) oder [Haystack](https://haystack.deepset.ai), welche jeweils von Grund auf Evaluationsmöglichkeiten bereitstellen. Die nachfolgend aufgeführten Frameworks bieten jedoch spezialisierte Funktionalitäten, mit denen RAG-Systeme noch effizienter getestet und optimiert werden können:
@@ -68,6 +73,10 @@ Die folgenden Benchmarks bewerten verschiedene LLMs auf verschiedene Eigenschaft
 * [RECALL: A Benchmark for LLMs Robustness against External Counterfactual Knowledge](https://arxiv.org/abs/2311.08147) (Nov 23)  
   Dieses Paper stellt einen Benchmark vor, der manuell bearbeitete kontrafaktische Kontexte in QA- und Textgenerierungsdatensätzen integriert, um die kontrafaktische Robustheit von LLMs zu bewerten.
 * ["Knowing When You Don't Know": A Multilingual Relevance Assessment Dataset for Robust Retrieval-Augmented Generation](https://arxiv.org/abs/2312.11361) (Dez 23)   
+
+Der folgende Benchmark ist speziell auf Information Retrieval ausgelegt:
+* [BEIR: A Heterogenous Benchmark for Zero-shot Evaluation of Information Retrieval Models](https://arxiv.org/abs/2104.08663) (Apr 21)  
+BEIR ist ein umfangreicher Datensatz, der verschiedene Einzel-Datensätze kombiniert und zur Verfügung stellt, wodurch er sich ideal zur Evaluation verschiedener Retrieval-Systeme eignet.
  
 Mit den folgenden Benchmarks lassen sich RAG-Systeme ganzheitlich evaluieren:
 * [RAGBench: Explainable Benchmark for Retrieval-Augmented Generation Systems](https://arxiv.org/abs/2407.11005) (Jun 24)  
